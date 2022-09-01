@@ -1,4 +1,4 @@
-peline {
+pipeline {
   agent {
     node {
       label 'nodejs'
@@ -7,14 +7,14 @@ peline {
   stages {
     stage ('Creating a new application') {
       steps {
-        sh 'oc new-app --name jenkins quay.io/sriharijami/srihari-static-web'
+        sh 'oc new-app --name static-web quay.io/sriharijami/srihari-static-web'
       }
     }
   }
   post {
     failure {
       echo 'FAILED'
-      sh 'oc status'
+      sh 'oc logs deployment/static-web'
     }
     success {
       sh 'oc status'
